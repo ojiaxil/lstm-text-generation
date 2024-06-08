@@ -37,3 +37,19 @@ def prep_dataset(raw):
     input_data = np.reshape(inputs, (num_patterns, seq_len, 1))
     input_data = input_data / float(vocab_size)
     output_data = np_utils.to_categorical(outputs)
+
+    return {'vocab_size': vocab_size, 'input_data': input_data, 'output_data': output_data}
+
+# genergate input-output pairs for sequence data
+
+def gen_input_output_pairs(raw, total_char, char_to_index, seq_len):
+    inputs = []
+    outputs = []
+
+    for i in range(total_char - seq_len):
+        seq_in = raw[i:i + seq_len]
+        seq_out = raw[i + seq_len]
+        inputs.append([char_to_index[char] for char in seq_in])
+        outputs.append(char_to_index[seq_out])
+
+    return inputs, outputs
