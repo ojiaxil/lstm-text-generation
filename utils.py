@@ -13,7 +13,7 @@ def getText(file):
 
 # create a dataset of sequences and corresponding outputs
 
-def prep_dataset(raw):
+def getDataset(raw):
     unique_char = sorted(set(raw))
     char_to_index = {char: idx for idx, char in enumerate(unique_char)}
 
@@ -29,7 +29,7 @@ def prep_dataset(raw):
 
     seq_len = 100
 
-    inputs, outputs = gen_input_output_pairs(raw, total_char, char_to_index, seq_len)
+    inputs, outputs = genInputOutputPairs(raw, total_char, char_to_index, seq_len)
 
     num_patterns = len(inputs)
     print(f"Total Patterns: {num_patterns}")
@@ -42,7 +42,7 @@ def prep_dataset(raw):
 
 # genergate input-output pairs for sequence data
 
-def gen_input_output_pairs(raw, total_char, char_to_index, seq_len):
+def genInputOutputPairs(raw, total_char, char_to_index, seq_len):
     inputs = []
     outputs = []
 
@@ -56,7 +56,7 @@ def gen_input_output_pairs(raw, total_char, char_to_index, seq_len):
 
 # construct and compile LSTM model
 
-def build_model(data):
+def buildModel(data):
     input_data = data['input']
     vocab_size = data['vocab']
 
