@@ -53,3 +53,34 @@ def gen_input_output_pairs(raw, total_char, char_to_index, seq_len):
         outputs.append(char_to_index[seq_out])
 
     return inputs, outputs
+
+# construct and compile LSTM model
+
+def build_model(data):
+    input_data = data['input']
+    vocab_size = data['vocab']
+
+    model = Sequential()
+
+    # add first LSTM layer
+
+    model.add(LSTM(256, input_shape = (input_data.shape[1], input_data.shape[2]), return_seq = True))
+    model.add(Dropout(0.3))
+
+    # add second LSTM layer
+
+    model.add(LSTM(256, return_seq = True))
+    model.add(Dropout(0.3))
+
+    # add third LSTM layer
+
+    model.add(LSTM(256))
+
+    # add dense layer
+
+    model.add(Dense(vocab_size))
+    model.add(Activation('softmax'))
+
+    model.compile(loss = 'categorical_crossentropy', optimizer = 'rmsprop')
+
+    return model
